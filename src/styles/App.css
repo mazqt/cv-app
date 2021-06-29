@@ -1,0 +1,60 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100vw;
+}
+
+#DisplayedCV {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 1vw;
+  width: 35vw;
+  height: 80vh;
+  justify-content: flex-start;
+  border-radius: 1vh;
+  overflow-y: visible;
+}
+
+.Lists {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100vw;
+}
+
+.ListInputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.Items {
+  width: 30vw;
+  height: 60vh;
+  justify-content: center;
+  border-color: black;
+  border-style: solid;
+  border-radius: 1vw;
+  padding: 1vw;
+  overflow-y: scroll;
+  align-self: center;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+}
+
+select {
+  width: 100%;
+}
+
+body {
+  background-image: url("https://i.pinimg.com/originals/0d/53/6e/0d536efae84740cd02531875fe2ddb17.jpg");
+  background-size: cover;
+}

@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import React, { Component } from "react";
 import PersonalInfo from "./components/PersonalInfo";
 import WorkHistory from "./components/WorkHistory";
@@ -72,59 +72,73 @@ export default class App extends Component {
   render() {
     const editor = (
       <div className="App">
-        <form onSubmit={this.toggleEditor.bind(this)}>
-          <PersonalInfo
-            data={this.state.PersonalInfo}
-            onFieldChange={this.onFieldChange.bind(this)}
-          />
-          <button type="submit">Submit your CV</button>
-        </form>
-        <Education onComponentSubmit={this.onComponentSubmit.bind(this)} />
-        <ul>
-          {this.state.Education.map((obj) => {
-            return (
-              <div>
-                <li>
-                  {obj.type}, {obj.name}, {obj.duration}
-                </li>
-                <button
-                  type="button"
-                  onClick={this.deleteItem.bind(
-                    this,
-                    null,
-                    obj.id,
-                    "Education"
-                  )}
-                >
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-        </ul>
-        <WorkHistory onComponentSubmit={this.onComponentSubmit.bind(this)} />
-        <ul>
-          {this.state.WorkHistory.map((obj) => {
-            return (
-              <div>
-                <li>
-                  {obj.type}, {obj.name}, {obj.duration}
-                </li>
-                <button
-                  type="button"
-                  onClick={this.deleteItem.bind(
-                    this,
-                    null,
-                    obj.id,
-                    "WorkHistory"
-                  )}
-                >
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-        </ul>
+        <div className="Lists">
+          <div className="Items">
+            <h2>Educational History: </h2>
+            <ul>
+              {this.state.Education.map((obj) => {
+                return (
+                  <div>
+                    <li>
+                      {obj.type}, {obj.name}, {obj.duration}
+                    </li>
+                    <button
+                      type="button"
+                      onClick={this.deleteItem.bind(
+                        this,
+                        null,
+                        obj.id,
+                        "Education"
+                      )}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="Inputs">
+            <form id="CV" onSubmit={this.toggleEditor.bind(this)}>
+              <PersonalInfo
+                data={this.state.PersonalInfo}
+                onFieldChange={this.onFieldChange.bind(this)}
+              />
+            </form>
+            <Education onComponentSubmit={this.onComponentSubmit.bind(this)} />
+            <WorkHistory
+              onComponentSubmit={this.onComponentSubmit.bind(this)}
+            />
+          </div>
+          <div className="Items">
+            <h2>Previous Work Experience:</h2>
+            <ul>
+              {this.state.WorkHistory.map((obj) => {
+                return (
+                  <div>
+                    <li>
+                      {obj.type}, {obj.name}, {obj.duration}
+                    </li>
+                    <button
+                      type="button"
+                      onClick={this.deleteItem.bind(
+                        this,
+                        null,
+                        obj.id,
+                        "WorkHistory"
+                      )}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+        <button type="submit" form="CV">
+          Submit your CV
+        </button>
       </div>
     );
 
@@ -132,7 +146,7 @@ export default class App extends Component {
       return editor;
     } else {
       return (
-        <div>
+        <div className="App">
           <CV
             PersonalInfo={this.state.PersonalInfo}
             Education={this.state.Education}

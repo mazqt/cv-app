@@ -3,11 +3,13 @@ import React, { Component } from "react";
 import PersonalInfo from "./components/PersonalInfo";
 import WorkHistory from "./components/WorkHistory";
 import Education from "./components/Education";
+import CV from "./components/CV";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      IDGen: 0,
       PersonalInfo: {
         firstName: "",
         lastName: "",
@@ -16,6 +18,7 @@ export default class App extends Component {
       },
       Education: [],
       WorkHistory: [],
+      Editor: true,
     };
   }
 
@@ -31,12 +34,15 @@ export default class App extends Component {
   onComponentSubmit(event) {
     event.preventDefault();
     let newObj = {
+      id: this.state.IDGen,
       type: event.target.type.value,
       name: event.target.name.value,
       duration: event.target.duration.value,
     };
+
     console.log(newObj);
     this.setState({
+      IDGen: this.state.IDGen + 1,
       [event.target.id]: [...this.state[event.target.id], newObj],
     });
 
@@ -45,20 +51,54 @@ export default class App extends Component {
     event.target.duration.value = "";
   }
 
+  toggleEditor(event) {
+    event.preventDefault();
+    let toggled = !this.state.Editor;
+
+    this.setState({
+      Editor: toggled,
+    });
+  }
+
+  deleteItem(event, id, list) {
+    let items = [...this.state[list]].filter((item) => item.id !== id);
+    console.log(items);
+    console.log(id);
+    this.setState({
+      [list]: items,
+    });
+  }
+
   render() {
-    return (
+    const editor = (
       <div className="App">
-        <PersonalInfo
-          data={this.state.PersonalInfo}
-          onFieldChange={this.onFieldChange.bind(this)}
-        />
+        <form onSubmit={this.toggleEditor.bind(this)}>
+          <PersonalInfo
+            data={this.state.PersonalInfo}
+            onFieldChange={this.onFieldChange.bind(this)}
+          />
+          <button type="submit">Submit your CV</button>
+        </form>
         <Education onComponentSubmit={this.onComponentSubmit.bind(this)} />
         <ul>
           {this.state.Education.map((obj) => {
             return (
-              <li>
-                {obj.type}, {obj.name}, {obj.duration}
-              </li>
+              <div>
+                <li>
+                  {obj.type}, {obj.name}, {obj.duration}
+                </li>
+                <button
+                  type="button"
+                  onClick={this.deleteItem.bind(
+                    this,
+                    null,
+                    obj.id,
+                    "Education"
+                  )}
+                >
+                  Delete
+                </button>
+              </div>
             );
           })}
         </ul>
@@ -66,13 +106,43 @@ export default class App extends Component {
         <ul>
           {this.state.WorkHistory.map((obj) => {
             return (
-              <li>
-                {obj.type}, {obj.name}, {obj.duration}
-              </li>
+              <div>
+                <li>
+                  {obj.type}, {obj.name}, {obj.duration}
+                </li>
+                <button
+                  type="button"
+                  onClick={this.deleteItem.bind(
+                    this,
+                    null,
+                    obj.id,
+                    "WorkHistory"
+                  )}
+                >
+                  Delete
+                </button>
+              </div>
             );
           })}
         </ul>
       </div>
     );
+
+    if (this.state.Editor) {
+      return editor;
+    } else {
+      return (
+        <div>
+          <CV
+            PersonalInfo={this.state.PersonalInfo}
+            Education={this.state.Education}
+            WorkHistory={this.state.WorkHistory}
+          />
+          <button type="button" onClick={this.toggleEditor.bind(this)}>
+            Edit your CV
+          </button>
+        </div>
+      );
+    }
   }
 }

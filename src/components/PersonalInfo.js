@@ -5,15 +5,13 @@ export default class PersonalInfo extends Component {
     return (
       <div>
         <h2>I'm PersonalInfo</h2>
-        <h2>{this.props.data.firstName}</h2>
-        <h2>{this.props.data.lastName}</h2>
-        <h2>{this.props.data.email}</h2>
-        <h2>{this.props.data.phoneNumber}</h2>
         <label>First name: </label>
         <input
           type="text"
           id="firstName"
           onChange={this.props.onFieldChange}
+          value={this.props.data.firstName}
+          required
         ></input>
         <br />
         <label>Last Name: </label>
@@ -21,6 +19,8 @@ export default class PersonalInfo extends Component {
           type="text"
           id="lastName"
           onChange={this.props.onFieldChange}
+          value={this.props.data.lastName}
+          required
         ></input>
         <br />
         <label>Email: </label>
@@ -28,6 +28,8 @@ export default class PersonalInfo extends Component {
           type="text"
           id="email"
           onChange={this.props.onFieldChange}
+          value={this.props.data.email}
+          required
         ></input>
         <br />
         <label>Phone Number: </label>
@@ -35,6 +37,8 @@ export default class PersonalInfo extends Component {
           type="text"
           id="phoneNumber"
           onChange={this.props.onFieldChange}
+          value={this.props.data.phoneNumber}
+          required
         ></input>
       </div>
     );
